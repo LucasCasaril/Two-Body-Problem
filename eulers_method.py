@@ -14,7 +14,7 @@ def eulers_integration(dydt, t0, tf, y0, G, m1, m2):
     h = 1 ############# E se o passo for um numero quebrado ? - Tamanho da Matrix ################
 
     # Initial Conditions
-    t = t0
+    t = t0 + h
     y = y0
 
     y_result = np.zeros((tf*h,12))  # The number of lines is how many iteration the program is going to run. And the number of collumns is 12.
