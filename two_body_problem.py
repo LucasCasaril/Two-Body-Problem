@@ -10,12 +10,14 @@ NEED FIXING:
 - E se h for um passo decimal ? vai ferrar as matrizes e as condições iniciais de "t"
 - t também entra no calculo do centro de massa
 '''
-from re import X
+
 import numpy as np
 from numpy.linalg import norm 
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import animation
+from eulers_method import eulers_integration
+from motion import dydt
 
 #from eulers_method import *
 
@@ -35,104 +37,18 @@ V1_0 = [40, 0, 0] # Initial Velocity of the First Body (km/s)
 V2_0 = [0, 2, 0] # Initial Velocity of the Second Body (km/s)
 
 # Initial Condition - Vector (12x1)
-y0 = R1_0
-y0.extend(R2_0)
-y0.extend(V1_0)
-y0.extend(V2_0)
-y0 = np.array(y0)
+y0 = np.concatenate((R1_0, R2_0, V1_0, V2_0), axis=None)
 
-#print('y0 = ', y0)
+# Calling the Numerical Integration Solver (Euler's Method or Runge-Kutta)
 
-def dydt(t,y):
-
-     R1 = [y[0], y[1], y[2]]
-     R2 = [y[3], y[4], y[5]]
-
-     V1 = [y[6], y[7], y[8]]
-     V2 = [y[9], y[10], y[11]]
-
-
-     r_sub = np.subtract(R2, R1)
-     r_vector = list(r_sub)
-     r = norm(r_vector)
-    
-
-     # Finding the acceleration of the Bodies -> accel_1 = G*m2*(r_vector)/r**3
-
-     res_1 = [x * G for x in r_vector]
-     res_1 = [x * m2 for x in res_1]
-     res_1 = [x * 1/(r**3) for x in res_1]
-
-     accel_1 = res_1
-
-     res_2 = [x * G for x in r_vector]
-     res_2 = [x * m1 for x in res_2]
-     res_2 = [x * -1/(r**3) for x in res_2]
-
-     accel_2 = res_2
-
-     dydt = V1
-     dydt.extend(V2)
-     dydt.extend(accel_1)
-     dydt.extend(accel_2)
-     dydt = np.array(dydt)
-
-     # Returning the vector with Velocity and Acceleration of the Bodies -> dydt = [V1, V2, accel_1, accel_2]
-     #print('dydt =', dydt)
-     return dydt
-
-##############################################################
-
-#Euler's Method within this file
-
-stages = 1 # Number of points within the time interval
-a = 0
-b = 0
-c = 1
-h = 1 ############# E se o passo for um numero quebrado ? - Tamanho da Matrix ################
-
-# Initial Conditions
-t = t0 + h
-y = y0
-
-y_result = np.zeros((tf*h,12))  # The number of lines is how many iteration the program is going to run. And the number of collumns is 12.
-y_result[0:1, :] = y0 # The fisrt row is always the initial condition
-
-count = 1 # Access the row number in the Results Matrix - the first row is the initial condition, so we start at the second row
-
-y_i = y # Initial Condition for the Euler's Method
-
-time = np.zeros(tf*h)
-
-while t < tf:
-  
-    f = dydt(t,y_i)
-
-    t = t + h
-
-    y_1 = y_i
-
-    y_2 = h * f
-
-    y_3 = y_1 + y_2
-
-    for j in range(12):   # Row starts at 0
-       y_result[count, j] = y_3[j]
-
-    y_i = y_3 # For the next step, we can update Euler's Method
-
-    time[count] += count
-    count = count + 1   
-
+y_result = eulers_integration(dydt, t0, tf, y0, G, m1, m2)
+h = 1 # For the Euler's Method
 
 # Finding the Particles Trajectories, according to the numerical integration
   
 X1 = y_result[:, 0]
 Y1 = y_result[:, 1]
 Z1 = y_result[:, 2]
-print('X1 = ', X1)
-print('Y1 = ', Y1)
-print('Z1 = ', Z1)
 
 X2 = y_result[:, 3]
 Y2 = y_result[:, 4]
@@ -148,22 +64,12 @@ for i in range(tf*h):
     YG[i] = ((m1*Y1[i] + m2*Y2[i])/(m1 + m2))
     ZG[i] = ((m1*Z1[i] + m2*Z2[i])/(m1 + m2))
 
-
 # Ploting the Answer
-
-#x = X1
-#y = Y1
-#z = Z1
-
-#x1 = X2
-#y1 = Y2
-#z1 = Z2
 
 # Setting up Data Set for Animation
 dataSet = np.array([X1, Y1, Z1])  # Combining our position coordinates
 dataSet1 = np.array([X2, Y2, Z2])  # Combining our position coordinates
 numDataPoints = len(X1)
-print(numDataPoints)
 
 def animate_func(num): # Aqui dentro tem que ter as várias chamadas das orbitas
 
@@ -197,3 +103,4 @@ plt.show()
 f = r"/home/casaril/Desktop/animate_func1.gif"
 writergif = animation.PillowWriter(fps=numDataPoints/6)
 line_ani.save(f, writer=writergif)
+
