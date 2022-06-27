@@ -67,10 +67,20 @@ while t < tf:
      # Allowed Truncation Error
 
      y_abs = [abs(ele) for ele in y]
-     y_max = max(y_abs)
+     y_max =S max(y_abs)
 
      te_allowed = tol * max(y_max,1)
 
      # Change in Step Size
 
-     h_delta = (te_allowed/(t))
+     h_delta = (te_allowed/(te_max))^(1/5)
+
+     # Truncation Error is in bounds
+
+     if te_max <= te_allowed:
+
+          h = min(h, (tf-t))
+          t = t + h
+          y = y_i + h * f * c5
+
+          y_result = # input line in each iteration
