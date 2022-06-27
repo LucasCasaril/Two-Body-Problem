@@ -3,6 +3,7 @@ Runge-Kutta-Fehlberg's Method - Using a Variable Step Size embedding of RK4 into
 
 """
 import numpy as np
+from motion import dydt
 
 #def rkf_integration(dydt, t0, tf, y0, G, m1, m2, tol):
 
@@ -42,5 +43,34 @@ h = (tf - t0)/100
 # Os vetores serão variaveis - Usaremos listas e depois iremos transformar
 # em vetores
 
+while t < tf:
 
+     t_i = t
+     y_i = y
 
+     for i in range(5):
+          t_inner = t_i + a[i]*h
+          y_inner = y_i
+
+          for j in range(i-1):
+               y_inner = y_inner + h*b[i][j]*f[:,j]
+
+          # Calling the Differential Equation of the Problem
+          f = dydt(t_i, y_i, G, m1, m2)
+
+     # Truncation Error
+
+     te = h * f * [np.subtract(c4, c5)]
+     te_abs = [abs(ele) for ele in te]
+     te_max = max(te_abs)
+
+     # Allowed Truncation Error
+
+     y_abs = [abs(ele) for ele in y]
+     y_max = max(y_abs)
+
+     te_allowed = tol * max(y_max,1)
+
+     # Change in Step Size
+
+     h_delta = (te_allowed/(t))
