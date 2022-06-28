@@ -20,11 +20,6 @@ c4 = [25/216,  0,  1408/2565,    2197/4104,   -1/5,    0  ] # For RK4
 c5 = [16/135,  0,  6656/12825,  28561/56430,  -9/50,  2/55] # For RK5
 '''
 
-'''
-NEED FIXING:
-f - Não estamos avaliando f1 a f6
-'''
-
 import numpy as np
 from motion import dydt
 
