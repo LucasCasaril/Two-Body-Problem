@@ -5,11 +5,13 @@ This Function solves the Two Body Problem using multiple Range Kutta Models for 
 """
 
 import numpy as np
-from numpy.linalg import norm 
+from numpy.linalg import norm
+from scipy.integrate import odeint
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import animation
 from eulers_method import eulers_integration
+from rkf_method import rkf_integration
 from motion import dydt
 
 #from eulers_method import *
@@ -21,7 +23,9 @@ t0 = 0
 m1 = 1e26 # First Body's Mass - kg
 m2 = 1e26 # Second Body's Mass - kg
 tf = 500 # Time of Simulation - seconds
-h = 0.5 # Steps within time interval - Number of iterations is going to be = tf*(1/h)
+h = 0.1 # Steps within time interval - Number of iterations is going to be = tf*(1/h)
+tol = 1e-8 # Tolerance for the Runge-Kutta-Fehlberg Method
+lenght = int(tf*(1/h)) 
 
 #Initial Condition 
 R1_0 = [0, 0, 0] # Initial Position of the First Body (km) - Result - [0, 0, 0]
@@ -35,6 +39,12 @@ y0 = np.concatenate((R1_0, R2_0, V1_0, V2_0), axis=None)
 
 # Calling the Numerical Integration Solver (Euler's Method or Runge-Kutta)
 y_result = eulers_integration(dydt, t0, tf, y0, G, m1, m2, h)
+#y_result = rkf_integration(dydt, t0, tf, y0, G, m1, m2, tol)
+#y_result = np.array(y_result)
+
+# USing the built-in solvers in Matlab:
+#t = np.linspace(t0, tf, lenght)
+#y_result = odeint(dydt, y0, t) # Need to change "def dydt(y, t):""
 
 # Finding the Particles Trajectories, according to the numerical integration
   

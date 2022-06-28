@@ -2,6 +2,11 @@ import numpy as np
 from numpy.linalg import norm 
 
 def dydt(t,y, G, m1, m2):
+#def dydt(y, t):
+
+     #G = 6.67259e-20
+     #m1 = 1e26 # First Body's Mass - kg
+     #m2 = 1e26 # Second Body's Mass - kg
 
      R1 = [y[0], y[1], y[2]]
      R2 = [y[3], y[4], y[5]]
@@ -11,7 +16,7 @@ def dydt(t,y, G, m1, m2):
 
      r_sub = np.subtract(R2, R1)
      r_vector = list(r_sub)
-     r = norm(r_vector)    
+     r = norm(r_vector)
 
      # Finding the acceleration of the Bodies -> accel_1 = G*m2*(r_vector)/r**3
 

@@ -35,7 +35,7 @@ def rkf_integration(dydt, t0, tf, y0, G, m1, m2, tol):
 
      # We need to assume the first time step
 
-     h = (tf - t0)/100
+     h = (tf - t0)/10000
 
      while t < tf:
 
@@ -44,11 +44,11 @@ def rkf_integration(dydt, t0, tf, y0, G, m1, m2, tol):
           # dydt(t,y_i, G, m1, m2)
 
           k1 = h * dydt(t, y, G, m1, m2)
-          k2 = h * dydt(t + h/4, y + k1/4)
-          k3 = h * dydt(t + 3*h/8, y + 3*k1/32 + 9*k2/32)
-          k4 = h * dydt(t + 12*h/13, y + 1932*k1/2197 - 7200*k2/2197 + 7296*k3/2197)
-          k5 = h * dydt(t + h, y + 439*k1/216 - 8*k2 + 3680*k3/513 - 845*k4/4104)
-          k6 = h * dydt(t + h/2, y - 8*k1/27 + 2*k2 - 3544*k3/2565 + 1859*k4/4104 - 11*k5/40)
+          k2 = h * dydt(t + h/4, y + k1/4, G, m1, m2)
+          k3 = h * dydt(t + 3*h/8, y + 3*k1/32 + 9*k2/32, G, m1, m2)
+          k4 = h * dydt(t + 12*h/13, y + 1932*k1/2197 - 7200*k2/2197 + 7296*k3/2197, G, m1, m2)
+          k5 = h * dydt(t + h, y + 439*k1/216 - 8*k2 + 3680*k3/513 - 845*k4/4104, G, m1, m2)
+          k6 = h * dydt(t + h/2, y - 8*k1/27 + 2*k2 - 3544*k3/2565 + 1859*k4/4104 - 11*k5/40, G, m1, m2)
 
           y_order4 = y + 25*k1/216 + 1408*k3/2565 + 2197*k4/4104 - k5/5
           y_order5 = y + 16*k1/135 + 6656*k3/12825 + 28561*k4/56430 - 9*k5/50 + 2*k6/55
@@ -56,7 +56,7 @@ def rkf_integration(dydt, t0, tf, y0, G, m1, m2, tol):
           # Putting the new iteration in a row
           y_result.append(y_order5) # Better value for the solution - Runge-Kutta' Method Order 5
 
-          e_vector = r_sub = np.subtract(y_order5, y_order4)
+          e_vector = np.subtract(y_order5, y_order4)
 
           # The Truncation Error is the largest of the Abs values of the vector
 
