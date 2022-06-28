@@ -25,15 +25,6 @@ from motion import dydt
 
 def rkf_integration(dydt, t0, tf, y0, G, m1, m2, tol):
 
-     # Initial Parameters
-     t0 = 0
-     tf = 100
-     y0 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-     G = 6.67259e-20
-     m1 = 1e26
-     m2 = 1e26
-     tol = 1e-8
-
      # Initial Conditions
 
      t = t0
