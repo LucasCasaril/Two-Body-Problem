@@ -41,7 +41,7 @@ y0 = np.concatenate((R1_0, R2_0, V1_0, V2_0), axis=None)
 # Calling the Numerical Integration Solver (Euler's Method or Runge-Kutta)
 #y_result = eulers_integration(dydt, t0, tf, y0, G, m1, m2, h)
 y_result = rkf_integration(dydt, t0, tf, y0, G, m1, m2, tol)
-#y_result = rkf_integration_fixed(dydt, t0, tf, y0, G, m1, m2, tol)
+#y_result = rkf_integration_fixed(dydt, t0, tf, y0, G, m1, m2, h)
 y_result = np.array(y_result)
 
 # USing the built-in solvers in Matlab:

@@ -1,7 +1,7 @@
 import numpy as np
 from motion import dydt
 
-def rkf_integration_fixed(dydt, t0, tf, y0, G, m1, m2, tol):
+def rkf_integration_fixed(dydt, t0, tf, y0, G, m1, m2, h):
 
      # Initial Conditions
 
@@ -13,7 +13,7 @@ def rkf_integration_fixed(dydt, t0, tf, y0, G, m1, m2, tol):
      #print("Começo - y_result[0] = ", y_result)
 
      # We need to assume the first time step]
-     h = 1
+     #h = 1
      print("h_inicial = ", h)
 
      while t < tf:
