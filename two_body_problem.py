@@ -17,7 +17,6 @@ from rkf_method import rkf_integration
 from rkf_method_h_fixed import rkf_integration_fixed
 from motion import dydt
 
-#from eulers_method import *
 
 G = 6.67259e-20 #Universal Gravitational Constant (km^3/kg/s^2)
 t0 = 0
@@ -42,15 +41,20 @@ y0 = np.concatenate((R1_0, R2_0, V1_0, V2_0), axis=None)
 
 # Calling the Numerical Integration Solver (Euler's Method or Runge-Kutta)
 
+# For Euler Method, we can use the following function:
 #y_result = eulers_integration(dydt, t0, tf, y0, G, m1, m2, h)
-#y_result = rkf_integration_fixed(dydt, t0, tf, y0, G, m1, m2, h)
 
+# For Runge-Kutta-Fehlberg with a Fixed Step Size, we can use the following function:
+#y_result = rkf_integration_fixed(dydt, t0, tf, y0, G, m1, m2, h)
+#y_result = np.array(y_result)
+
+# For Runge-Kutta-Fehlberg with a Variable Step Size, we can use the following function:
 y_result = rkf_integration(dydt, t0, tf, y0, G, m1, m2, tol, h)
 y_result = np.array(y_result)
 
-# USing the built-in solvers in Matlab:
+# Using the built-in solvers in Matlab:
 #t = np.linspace(t0, tf, lenght)
-#y_result = odeint(dydt, y0, t) # Need to change "def dydt(y, t):""
+#y_result = odeint(dydt, y0, t) # Need to change the calling "def dydt(y, t):""
 
 # Finding the Particles Trajectories, according to the numerical integration
   
@@ -62,9 +66,7 @@ X2 = y_result[:, 3]
 Y2 = y_result[:, 4]
 Z2 = y_result[:, 5]
 
-#print("X1 = ", X1)
 # Center the Mass at each time step used:
-
 XG = np.zeros (len(X1)); YG = np.zeros (len(X1)); ZG = np.zeros (len(X1))
 
 for i in range(len(X1)):
