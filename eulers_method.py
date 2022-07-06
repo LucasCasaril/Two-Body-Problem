@@ -1,15 +1,13 @@
 """
 Euler's Method - Range-Kutta 1
+
+Author: Lucas Casaril
 """
 
 import numpy as np
 from motion import dydt
 
 def eulers_integration(dydt, t0, tf, y0, G, m1, m2, h):
-
-    a = 0
-    b = 0
-    c = 1
 
     lenght = int(tf*(1/h)) 
 
@@ -29,11 +27,11 @@ def eulers_integration(dydt, t0, tf, y0, G, m1, m2, h):
     while t < tf:
         
         # Calling the Differential Equation of the Problem
-        f = dydt(t,y_i, G, m1, m2)
+        f = h * dydt(t,y_i, G, m1, m2)
 
         t = t + h
 
-        y_inner = y_i + h * f
+        y_inner = y_i + f
 
         for j in range(12):   # Row starts at 0
             y_result[count, j] = y_inner[j]

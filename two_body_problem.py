@@ -2,6 +2,8 @@
 Two Body Problem - Numerical Solution and Representation
 
 This Function solves the Two Body Problem using multiple Range Kutta Models for Numerical Integration
+
+Author: Lucas Casaril
 """
 
 import numpy as np
@@ -23,8 +25,8 @@ t0 = 0
 #Input Data: 
 m1 = 1e26 # First Body's Mass - kg
 m2 = 1e26 # Second Body's Mass - kg
-tf = 500 # Time of Simulation - seconds
-h = 1 # Steps within time interval - Number of iterations is going to be = tf*(1/h)
+tf = 300 # Time of Simulation - seconds
+h = 0.5 # Steps within time interval - Number of iterations is going to be = tf*(1/h)
 tol = 1e-6 # Tolerance for the Runge-Kutta-Fehlberg Method
 lenght = int(tf*(1/h)) 
 
@@ -39,10 +41,12 @@ V2_0 = [0, 40, 0] # Initial Velocity of the Second Body (km/s)
 y0 = np.concatenate((R1_0, R2_0, V1_0, V2_0), axis=None)
 
 # Calling the Numerical Integration Solver (Euler's Method or Runge-Kutta)
+
 #y_result = eulers_integration(dydt, t0, tf, y0, G, m1, m2, h)
-y_result = rkf_integration(dydt, t0, tf, y0, G, m1, m2, tol)
 #y_result = rkf_integration_fixed(dydt, t0, tf, y0, G, m1, m2, h)
-#y_result = np.array(y_result)
+
+y_result = rkf_integration(dydt, t0, tf, y0, G, m1, m2, tol, h)
+y_result = np.array(y_result)
 
 # USing the built-in solvers in Matlab:
 #t = np.linspace(t0, tf, lenght)
