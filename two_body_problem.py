@@ -25,7 +25,7 @@ t0 = 0
 m1 = 1e26 # First Body's Mass - kg
 m2 = 1e26 # Second Body's Mass - kg
 tf = 300 # Time of Simulation - seconds
-h = 0.5 # Steps within time interval - Number of iterations is going to be = tf*(1/h)
+h = 1 # Steps within time interval - Number of iterations is going to be = tf*(1/h)
 tol = 1e-6 # Tolerance for the Runge-Kutta-Fehlberg Method
 lenght = int(tf*(1/h)) 
 
@@ -38,6 +38,8 @@ V2_0 = [0, 40, 0] # Initial Velocity of the Second Body (km/s)
 
 # Initial Condition - Vector (12x1)
 y0 = np.concatenate((R1_0, R2_0, V1_0, V2_0), axis=None)
+
+#### ATTENTION - Only use on method at a time !!
 
 # Calling the Numerical Integration Solver (Euler's Method or Runge-Kutta)
 
@@ -82,7 +84,6 @@ dataSet1 = np.array([X1, Y1, Z1])  # Combining the position coordinates
 dataSet2 = np.array([X2, Y2, Z2])  # Combining the position coordinates
 dataSetG = np.array([XG, YG, ZG])  # Combining the position coordinates
 numDataPoints = len(X1)
-print("NumDataPoints = ", numDataPoints)
 
 
 def animate_func(num): # Aqui dentro tem que ter as várias chamadas das orbitas
