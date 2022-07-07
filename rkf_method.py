@@ -91,22 +91,16 @@ def rkf_integration(dydt, t0, tf, y0, G, m1, m2, tol, h):
 
           if e_max <= tol:
                # h_new can be the same
-               print("Here - Erro Menor")
+
                h = h_old
-               print("h_new = ", h)
 
           if e_max > tol:
                # h_new has to be smaller
-               print("Here - Erro Maior")
-               s = 0.84 * pow(((tol * h_old)/(e_max)), 0.25)
-               print("Escalar s =",s)
-               h = h_old * s
-               print("h_new = ", h)
 
-          #passo.append(int(h * 10**3)/10**3)
-          #y = y_order5
-          #t += h
-          #time.append(int(t))
-          #print("Novo t = ", t)
-          #print("============================")
+               s = 0.84 * pow(((tol * h_old)/(e_max)), 0.25)
+
+               h = h_old * s
+
+          y = y_order5
+          t = t + h
  ''' 
