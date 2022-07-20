@@ -54,7 +54,7 @@ y0 = np.concatenate((R1_0, R2_0, V1_0, V2_0), axis=None)
 y_result = rkf_integration(dydt, t0, tf, y0, G, m1, m2, tol, h)
 y_result = np.array(y_result)
 
-# Using the built-in solvers in Matlab:
+# Using the built-in solvers in Python:
 #t = np.linspace(t0, tf, lenght)
 #y_result = odeint(dydt, y0, t) # Need to change the calling "def dydt(y, t):""
 
