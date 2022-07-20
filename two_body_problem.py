@@ -23,18 +23,18 @@ t0 = 0
 
 #Input Data: 
 m1 = 1e26 # First Body's Mass - kg
-m2 = 1e26 # Second Body's Mass - kg
-tf = 900 # Time of Simulation - seconds
+m2 = 1e24 # Second Body's Mass - kg
+tf = 2000 # Time of Simulation - seconds
 h = 1 # Steps within time interval - Number of iterations is going to be = tf*(1/h)
 tol = 1e-6 # Tolerance for the Runge-Kutta-Fehlberg Method
 lenght = int(tf*(1/h)) 
 
 #Initial Condition 
 R1_0 = [0, 0, 0] # Initial Position of the First Body (km) - Result - [0, 0, 0]
-R2_0 = [3000, 0, 0] # Initial Position of the Second Body (km)
+R2_0 = [7000, 0, 0] # Initial Position of the Second Body (km)
 
-V1_0 = [10, 20, 30] # Initial Velocity of the First Body (km/s)
-V2_0 = [0, 40, 0] # Initial Velocity of the Second Body (km/s)
+V1_0 = [0, 0, 10] # Initial Velocity of the First Body (km/s)
+V2_0 = [0, 30, 10] # Initial Velocity of the Second Body (km/s)
 
 # Initial Condition - Vector (12x1)
 y0 = np.concatenate((R1_0, R2_0, V1_0, V2_0), axis=None)
@@ -107,16 +107,16 @@ def animate_func(num): # Aqui dentro tem que ter as várias chamadas das orbitas
     #ax.plot3D(0,0,0, c='blue', marker='o')
 
     #Setting Axes Limits
-    ax.set_xlim3d([-3e3, 6e3])    
-    ax.set_ylim3d([-6e3, 2e3])
-    ax.set_zlim3d([-2e3, 6e3])
+    ax.set_xlim3d([-1e4, 1e4])    
+    ax.set_ylim3d([-1e4, 1e4])
+    ax.set_zlim3d([0, 9e4])
 
     plt.title('Two-Body Problem - Simulation')
     ax.set_xlabel('X [km]')
     ax.set_ylabel('Y [km]')
     ax.set_zlabel('Z [km]')
 
-    ax.view_init(10, 90)
+    #ax.view_init(10, 90)
 
 # Plotting the Animation
 #numDataPoints = numDataPoints/1
