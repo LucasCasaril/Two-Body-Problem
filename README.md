@@ -10,7 +10,7 @@ The integration methods used in this project are not built-in, ready-to-use appl
 
 The main file is "two-body-problem.py".
 
-In this file, you can choose with integration method to use. But remember to comment the other ones. The integration methods are listed below:
+In this file, you can choose the integration method to use. But remember to comment the other ones. The integration methods are listed below:
 
     Euler's Method - "eulers_method.py"
 
